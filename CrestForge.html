@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>War Within Crest Forge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Updated Color Palette based on "Crest Forge.png" */
+        :root {
+            --bg-deep-dark: #1A1A1A;
+            --card-dark: #2C2C2C; /* This will now primarily be used for inner sections, not main cards */
+            --border-subtle: #4A4A4A;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0B0B0;
+            --text-muted: #888888;
+            --highlight-gold: #FFD700;
+            --highlight-blue: #6A9EDD; /* A softer, more muted blue */
+            --accent-green: #4CAF50;
+            --accent-green-hover: #5cb85c;
+            --error-red: #DC3545;
+            --input-bg: #3A3A3A;
+            --table-header-bg: #3A3A3A;
+            --table-row-bg: #222222;
+            --table-row-even-bg: #272727; /* Slightly different shade for zebra striping */
+
+            /* New variable for consistent horizontal padding */
+            --content-horizontal-padding: 40px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-deep-dark); /* Solid dark background */
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px 20px; /* More padding top/bottom for the main content area */
+            display: flex;
+            flex-direction: column; /* Allow footer to stack below content */
+            justify-content: space-between; /* Push footer to bottom if content is short */
+            align-items: center; /* Center the container horizontally */
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px; /* Increased gap between sidebar and main content */
+            width: 100%;
+            max-width: 1300px; /* Slightly wider container */
+            align-items: flex-start;
+            flex-grow: 1; /* Allows container to take available space */
+        }
+
+        .sidebar {
+            background-color: transparent; /* No background */
+            border-radius: 0; /* No radius */
+            box-shadow: none; /* No shadow */
+            padding: var(--content-horizontal-padding); /* Use variable for consistent padding */
+            width: 350px; /* Slightly wider sidebar */
+            flex-shrink: 0;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--highlight-gold);
+            text-align: left;
+            margin-bottom: 25px; /* Adjusted margin */
+            font-size: 2em; /* Adjusted font size */
+            font-weight: 700;
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--highlight-blue);
+            text-align: left;
+            margin-top: 0; /* Important: remove default margin-top to align with parent's padding */
+            margin-bottom: 20px; /* Adjusted margin */
+            font-size: 1.8em; /* Adjusted font size */
+            font-weight: 600;
+        }
+
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--highlight-gold); /* Gold for section headers */
+            margin-top: 25px; /* Adjusted margin */
+            margin-bottom: 15px; /* Adjusted margin */
+            font-size: 1.3em; /* Adjusted font size */
+            font-weight: 600;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        h4 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--highlight-blue); /* Blue for sub-section headers */
+            font-size: 1em; /* Adjusted font size */
+            margin-top: 15px; /* Adjusted margin */
+            margin-bottom: 8px; /* Adjusted margin */
+            font-weight: 500;
+        }
+
+        .input-group {
+            margin-bottom: 20px; /* Adjusted margin */
+            text-align: left;
+        }
+
+        .input-group label {
+            display: flex; /* Use flexbox for label and icon alignment */
+            align-items: center; /* Vertically align items */
+            margin-bottom: 8px; /* Adjusted margin */
+            font-weight: 500;
+            font-size: 0.95em; /* Adjusted font size */
+            color: var(--text-primary);
+        }
+
+        .input-group label img {
+            width: 20px; /* Size of the icon */
+            height: 20px;
+            margin-right: 8px; /* Space between icon and text */
+            vertical-align: middle; /* Align with text baseline */
+        }
+
+        .input-group input[type="number"],
+        .input-group input[type="text"], /* Added for readonly input */
+        .input-group select {
+            width: 100%;
+            padding: 10px 12px; /* Adjusted padding */
+            border: 1px solid var(--border-subtle);
+            border-radius: 5px; /* 5px radius */
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            font-size: 0.9em; /* Adjusted font size */
+            box-sizing: border-box;
+            -moz-appearance: textfield;
+            appearance: none;
+            /* Custom dropdown arrow for select */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23B0B0B0%22%20d%3D%22M287%2C197.3L159.5%2C69.8c-4.7-4.7-12.3-4.7-17%2C0L5.4%2C197.3c-4.7%2C4.7-4.7%2C12.3%2C0%2C17l17%2C17c4.7%2C4.7%2C12.3%2C4.7%2C17%2C0l106.6-106.6l106.6%2C106.6c4.7%2C4.7%2C12.3%2C4.7%2C17%2C0l17-17C291.7%2C209.6%2C291.7%2C202%2C287%2C197.3z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            background-size: 10px auto;
+        }
+        .input-group input[type="number"]::-webkit-outer-spin-button,
+        .input-group input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .input-group select option {
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+        }
+
+        /* Toggle Switch Styles */
+        .toggle-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .toggle-wrapper span {
+            font-size: 0.95em;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 24px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border-subtle);
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 24px; /* Retain full roundness for slider pill */
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 50%; /* Retain full roundness for slider knob */
+        }
+        input:checked + .toggle-slider {
+            background-color: var(--accent-green);
+        }
+        input:focus + .toggle-slider {
+            box-shadow: none; /* No shadow */
+        }
+        input:checked + .toggle-slider:before {
+            -webkit-transform: translateX(16px);
+            -ms-transform: translateX(16px);
+            transform: translateX(16px);
+        }
+        /* No need for .round classes, just apply directly to .toggle-slider */
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            background-color: var(--highlight-blue); /* Using blue for the button as per design */
+            color: white;
+            border: none;
+            border-radius: 5px; /* 5px radius */
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: none; /* No shadow */
+        }
+
+        button:hover {
+            background-color: #5b8acd; /* Lighter shade on hover */
+            transform: translateY(-1px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+
+        .results-card {
+            background-color: transparent; /* No background */
+            border-radius: 0; /* No radius */
+            box-shadow: none; /* No shadow */
+            /* Apply top padding and consistent left padding */
+            padding: 40px 0 0 var(--content-horizontal-padding);
+            margin-bottom: 30px;
+            display: none;
+            width: 100%;
+        }
+
+        .results-card .summary-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+            color: var(--text-secondary);
+        }
+
+        .results-card .summary-line strong {
+            color: var(--highlight-gold);
+            font-weight: 700;
+            margin-right: 5px; /* Space between number and icon */
+        }
+
+        .results-card .summary-line img {
+            width: 18px; /* Slightly smaller icons for summary lines */
+            height: 18px;
+            margin-right: 5px; /* Space after icon, before text */
+            vertical-align: middle;
+        }
+
+        .results-card .option-section {
+            background-color: var(--card-dark); /* Using card-dark for inner sections */
+            border-radius: 5px; /* 5px radius for inner sections */
+            padding: 25px; /* Adjusted padding */
+            margin-top: 25px; /* Adjusted margin */
+        }
+
+        .results-card .option-section:first-of-type {
+            margin-top: 0;
+        }
+
+        .results-card p {
+            font-size: 0.95em;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+        }
+
+        .results-card strong {
+            color: var(--highlight-gold);
+            font-weight: 700; /* Bolder for emphasis */
+        }
+
+        .note {
+            font-size: 0.8em;
+            color: var(--text-muted); /* More muted for notes */
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        .error {
+            color: var(--error-red);
+            background-color: rgba(220, 53, 69, 0.15);
+            border: 1px solid var(--error-red);
+            padding: 10px;
+            border-radius: 5px; /* 5px radius */
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 500;
+            display: none;
+            font-size: 0.9em;
+        }
+
+        /* Styles for the table-like output based on provided image */
+        .output-table {
+            width: 100%;
+            border-collapse: collapse; /* Use collapse for no gaps, rely on background for separation */
+            margin-top: 15px;
+            font-size: 0.9em;
+            border-radius: 5px; /* 5px radius for the entire table */
+            overflow: hidden; /* Ensures content doesn't break rounded corners */
+        }
+
+        .output-table th, .output-table td {
+            padding: 10px 12px; /* Adjusted padding */
+            text-align: left;
+            border: none; /* Remove default table borders */
+            white-space: nowrap; /* Prevent text wrapping in cells */
+        }
+
+        .output-table thead tr {
+            background-color: var(--table-header-bg);
+            color: var(--highlight-blue);
+            font-weight: 600;
+        }
+
+        .output-table tbody tr {
+            background-color: var(--table-row-bg);
+        }
+        .output-table tbody tr:nth-child(even) {
+            background-color: var(--table-row-even-bg); /* Zebra striping */
+        }
+        .output-table tbody tr:hover {
+            background-color: var(--input-bg); /* Highlight on hover */
+        }
+
+        .output-table td {
+            color: var(--text-primary);
+        }
+        .output-table td.value {
+            font-weight: bold;
+            color: var(--highlight-gold);
+        }
+
+        /* Footer Styles */
+        footer {
+            margin-top: 60px; /* Space between content and footer */
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 0.75em;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-subtle);
+            width: 100%; /* Ensure footer spans full width */
+            max-width: 1300px; /* Align with container max-width */
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        footer a {
+            color: var(--highlight-blue); /* Make link stand out */
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        footer a:hover {
+            color: var(--highlight-gold); /* Hover effect */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) { /* Adjust breakpoint for better tablet view */
+            :root {
+                --content-horizontal-padding: 30px; /* Update variable for this breakpoint */
+            }
+            .container {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .sidebar {
+                width: auto;
+                /* Padding uses variable, so no need to redefine here */
+            }
+            .main-content {
+                padding: 0;
+            }
+            .results-card {
+                /* Preserve original top padding for this breakpoint (0), apply horizontal from variable */
+                padding: 0 0 0 var(--content-horizontal-padding);
+            }
+            /* ... rest of existing styles ... */
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --content-horizontal-padding: 20px; /* Update variable for this breakpoint */
+            }
+            body { padding: 20px 10px; }
+            .sidebar {
+                /* Padding uses variable, so no need to redefine here */
+            }
+            .results-card {
+                /* Preserve original top padding for this breakpoint (20px), apply horizontal from variable */
+                padding: 20px 0 0 var(--content-horizontal-padding);
+                border-radius: 5px; /* Ensure consistency */
+            }
+            /* ... rest of existing styles ... */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Crest Forge</h1>
+            <p class="note" style="margin-top:-15px; margin-bottom:25px;">
+                Plan your Mythic+ dungeon routes to efficiently upgrade your gear with crests.
+            </p>
+
+            <div class="input-group">
+                <label for="gildedNeeded">
+                    <img src="https://wow.zamimg.com/images/wow/icons/large/inv_crestupgrade_undermine_gilded.jpg" alt="Gilded Crest Icon">
+                    Gilded Crests Needed:
+                </label>
+                <input type="number" id="gildedNeeded" min="0" value="0">
+            </div>
+
+            <div class="input-group">
+                <label for="runedEquivalentDisplay">
+                    <img src="https://wow.zamimg.com/images/wow/icons/large/inv_crestupgrade_undermine_runed.jpg" alt="Runed Crest Icon">
+                    Runed Undermine Crest Equivalent:
+                </label>
+                <input type="text" id="runedEquivalentDisplay" value="0" readonly>
+            </div>
+
+            <div class="input-group">
+                <label for="maxMythicLevel">Your Max M+ Level:</label>
+                <select id="maxMythicLevel">
+                    <option value="12">M+12 and More</option>
+                    <option value="11">M+11</option>
+                    <option value="10">M+10</option>
+                    <option value="9">M+9</option>
+                    <option value="8">M+8</option>
+                    <option value="7">M+7</option>
+                    <option value="6">M+6</option>
+                    <option value="5">M+5</option>
+                    <option value="4">M+4</option>
+                    <option value="3">M+3</option>
+                    <option value="2">M+2</option>
+                </select>
+                <p class="note">Highest key you comfortably run.</p>
+            </div>
+
+            <div class="input-group">
+                <div class="toggle-wrapper">
+                    <span>Include Delves?</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="includeDelvesToggle" checked>
+                        <span class="toggle-slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <button onclick="calculateCrests()">Generate Plan</button>
+
+            <div id="errorMessage" class="error"></div>
+        </div>
+
+        <div class="main-content">
+            <div class="results-card" id="results">
+                <h2>Crest Acquisition Plan</h2>
+                <div class="summary-line">
+                    Total Gilded needed: <strong id="totalGilded">0</strong>
+                    <img src="https://wow.zamimg.com/images/wow/icons/large/inv_crestupgrade_undermine_gilded.jpg" alt="Gilded Crest Icon">
+                    Gilded
+                </div>
+                <div class="summary-line">
+                    Total Equivalent Runed needed: <strong id="totalEquivalentRuned">0</strong>
+                    <img src="https://wow.zamimg.com/images/wow/icons/large/inv_crestupgrade_undermine_runed.jpg" alt="Runed Crest Icon">
+                    Runed
+                </div>
+
+                <div class="option-section" id="delvesSection">
+                    <h3>Delves Reminder</h3>
+                    <table class="output-table">
+                        <thead>
+                            <tr>
+                                <th>Delves</th>
+                                <th>Number Of Runs</th>
+                                <th>Gilded Per Run</th>
+                                <th>Total Gilded From Runs</th>
+                            </tr>
+                        </thead>
+                        <tbody id="delvesTableBody">
+                            </tbody>
+                    </table>
+                </div>
+
+                <div class="option-section" id="option1Section">
+                    <h3 id="option1Heading">Option 1: Focus Gilded (M+7+ Keys)</h3>
+                    <p class="note">This option prioritizes direct Gilded Crests from higher Mythic+ keys.</p>
+                    <h4>M+ (Direct Gilded)</h4>
+                    <table class="output-table">
+                        <thead>
+                            <tr>
+                                <th>Mythic+</th>
+                                <th>Number Of Runs</th>
+                                <th>Gilded Per Run</th>
+                                <th>Total Gilded From Runs</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mythicGildedTableBody1">
+                            </tbody>
+                    </table>
+                    <p id="totalGildedMPlusRuns1" style="font-weight: bold; text-align: right;"></p>
+
+                    <h4>M+ (Runed for Conversion)</h4>
+                    <table class="output-table">
+                        <thead>
+                            <tr>
+                                <th>Mythic+</th>
+                                <th>Number Of Runs</th>
+                                <th>Runed Per Run</th>
+                                <th>Total Runed From Runs</th>
+                                <th>Equivalent Gilded</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mythicRunedTableBody1">
+                            </tbody>
+                    </table>
+                    <p id="totalRunedMPlusRuns1" style="font-weight: bold; text-align: right;"></p>
+                </div>
+
+                <div class="option-section" id="option2Section">
+                    <h3>Option 2: Focus Runed (M+2 to M+6 Keys for Conversion)</h3>
+                    <p class="note" id="option2Note"></p>
+                    <h4>M+ (Runed for Conversion)</h4>
+                    <table class="output-table">
+                        <thead>
+                            <tr>
+                                <th>Mythic+</th>
+                                <th>Number Of Runs</th>
+                                <th>Runed Per Run</th>
+                                <th>Total Runed From Runs</th>
+                                <th>Equivalent Gilded</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mythicRunedTableBody2">
+                            </tbody>
+                    </table>
+                    <p id="totalRunedMPlusRuns2" style="font-weight: bold; text-align: right;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Crest Forge. Not affiliated with Blizzard Entertainment, Inc.</p>
+        <p>World of Warcraft, Warcraft, and Blizzard Entertainment are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
+        <p>For contact, add me on Discord: <a href="#" id="discordContact" title="Click to copy Discord username">itsproogi</a></p>
+    </footer>
+
+    <script>
+        const CREST_CONVERSION_RATE_RUNED_TO_GILDED = 3;
+
+        const MYTHIC_PLUS_GILDED_DATA = [ // These keys drop Gilded Crests directly
+            { level: 12, crests: 20 },
+            { level: 11, crests: 18 },
+            { level: 10, crests: 16 },
+            { level: 9, crests: 14 },
+            { level: 8, crests: 12 },
+            { level: 7, crests: 10 },
+        ];
+
+        const MYTHIC_PLUS_RUNED_DATA = [ // These keys drop Runed Crests directly
+            { level: 6, crests: 18 },
+            { level: 5, crests: 16 },
+            { level: 4, crests: 14 },
+            { level: 3, crests: 12 },
+            { level: 2, crests: 10 },
+        ];
+
+        const DELVE_GILDED_CRESTS_PER_RUN = 7;
+        const DELVE_MAX_GILDED_PER_WEEK = 21; // Limited to 3 Delves +11 per week (3 runs * 7 crests/run)
+
+        function calculateCrests() {
+            const gildedNeededInput = document.getElementById('gildedNeeded');
+            const maxMythicLevelInput = document.getElementById('maxMythicLevel');
+            const includeDelvesToggle = document.getElementById('includeDelvesToggle');
+            const errorMessage = document.getElementById('errorMessage');
+            const resultsDiv = document.getElementById('results');
+            const option1Section = document.getElementById('option1Section');
+            const option2Section = document.getElementById('option2Section');
+            const delvesSection = document.getElementById('delvesSection');
+
+            resultsDiv.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            let initialGildedNeeded = parseInt(gildedNeededInput.value);
+            let maxMythicLevel = parseInt(maxMythicLevelInput.value);
+            const includeDelves = includeDelvesToggle.checked;
+
+            if (isNaN(initialGildedNeeded) || initialGildedNeeded < 0) {
+                errorMessage.textContent = "Enter a valid non-negative number for Gilded Crests Needed.";
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            if (initialGildedNeeded === 0) {
+                errorMessage.textContent = "You need 0 Gilded Crests.";
+                errorMessage.style.display = 'block';
+                clearResults();
+                return;
+            }
+
+            // Update summary lines - only update numbers, text is static in HTML now
+            document.getElementById('totalGilded').textContent = initialGildedNeeded;
+            const equivalentRuned = initialGildedNeeded * CREST_CONVERSION_RATE_RUNED_TO_GILDED;
+            document.getElementById('runedEquivalentDisplay').value = equivalentRuned;
+            document.getElementById('totalEquivalentRuned').textContent = equivalentRuned;
+
+            const accessibleGildedSources = MYTHIC_PLUS_GILDED_DATA.filter(
+                mplus => mplus.level <= maxMythicLevel
+            );
+            const accessibleRunedSources = MYTHIC_PLUS_RUNED_DATA.filter(
+                mplus => mplus.level <= maxMythicLevel
+            );
+
+            // Dynamically update Option 1 heading
+            const option1Heading = document.getElementById('option1Heading');
+            if (maxMythicLevel >= 7) {
+                 // Find the highest direct gilded level the user can run
+                 const highestAccessibleDirectGilded = accessibleGildedSources.length > 0 ? Math.max(...accessibleGildedSources.map(s => s.level)) : null;
+                 if (highestAccessibleDirectGilded) {
+                    option1Heading.textContent = `Option 1: Focus Gilded (M+${highestAccessibleDirectGilded === 12 ? '12+' : highestAccessibleDirectGilded} Keys)`;
+                 } else {
+                     option1Heading.textContent = `Option 1: Focus Gilded (M+7+ Keys)`; // Fallback, though typically won't be hit if maxMythicLevel >= 7
+                 }
+            }
+
+            // Handle Delves section visibility and calculation
+            let gildedFromDelves = 0;
+            let delvesCount = 0;
+            if (includeDelves) {
+                delvesSection.style.display = 'block';
+                delvesCount = Math.min(Math.floor(initialGildedNeeded / DELVE_GILDED_CRESTS_PER_RUN), DELVE_MAX_GILDED_PER_WEEK / DELVE_GILDED_CRESTS_PER_RUN);
+                gildedFromDelves = delvesCount * DELVE_GILDED_CRESTS_PER_RUN;
+                renderDelvesTable('delvesTableBody', delvesCount, gildedFromDelves);
+            } else {
+                delvesSection.style.display = 'none';
+                renderDelvesTable('delvesTableBody', 0, 0); // Clear delves table
+            }
+
+            if (maxMythicLevel >= 7) {
+                option1Section.style.display = 'block';
+                option2Section.style.display = 'block';
+                calculateOption1(initialGildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves);
+                calculateOption2(initialGildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves);
+            } else { // maxMythicLevel is 6 or less
+                option1Section.style.display = 'none'; // Hide Option 1
+                option2Section.style.display = 'block'; // Only show Option 2
+                calculateOption2(initialGildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves);
+            }
+
+            resultsDiv.style.display = 'block';
+        }
+
+        // Helper to clear results
+        function clearResults() {
+            document.getElementById('delvesTableBody').innerHTML = '';
+            document.getElementById('mythicGildedTableBody1').innerHTML = '';
+            document.getElementById('totalGildedMPlusRuns1').textContent = '';
+            document.getElementById('mythicRunedTableBody1').innerHTML = '';
+            document.getElementById('totalRunedMPlusRuns1').textContent = '';
+            document.getElementById('mythicRunedTableBody2').innerHTML = '';
+            document.getElementById('totalRunedMPlusRuns2').textContent = '';
+            document.getElementById('option2Note').textContent = '';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('runedEquivalentDisplay').value = '0';
+            document.getElementById('totalGilded').textContent = '0'; // Reset summary text
+            document.getElementById('totalEquivalentRuned').textContent = '0'; // Reset summary text
+        }
+
+        // Helper function to render table rows
+        function renderMPlusTable(tableBodyId, runsArray, totalRunsElementId, crestType) {
+            const tableBody = document.getElementById(tableBodyId);
+            tableBody.innerHTML = '';
+            let totalRunsCalculated = 0;
+            let totalCrestsEarned = 0;
+            let totalEquivalentGilded = 0;
+
+            if (runsArray.length > 0) {
+                runsArray.forEach(run => {
+                    const row = tableBody.insertRow();
+                    row.insertCell().textContent = `M+${run.level}`;
+                    row.insertCell().textContent = run.runs;
+                    row.insertCell().textContent = run.crestsPerRun;
+                    const earnedInRuns = run.runs * run.crestsPerRun;
+                    row.insertCell().textContent = earnedInRuns;
+
+                    if (crestType === 'Runed') {
+                        const equivalentGilded = Math.floor(earnedInRuns / CREST_CONVERSION_RATE_RUNED_TO_GILDED);
+                        row.insertCell().textContent = equivalentGilded;
+                        totalEquivalentGilded += equivalentGilded;
+                    }
+                    // For Gilded type, the "Equivalent Gilded" column is not added
+
+                    totalRunsCalculated += run.runs;
+                    totalCrestsEarned += earnedInRuns;
+                });
+                if(totalRunsElementId) {
+                    if (crestType === 'Runed') {
+                        document.getElementById(totalRunsElementId).textContent = `Total M+ Runed runs: ${totalRunsCalculated} (yielding ${totalCrestsEarned} Runed Crests, convertible to ${totalEquivalentGilded} Gilded)`;
+                    } else {
+                        document.getElementById(totalRunsElementId).textContent = `Total M+ Gilded runs: ${totalRunsCalculated} (yielding ${totalCrestsEarned} Gilded Crests)`;
+                    }
+                }
+            } else {
+                const row = tableBody.insertRow();
+                const cell = row.insertCell();
+                // Adjust colspan based on crestType as the column count changes
+                cell.colSpan = (crestType === 'Runed' ? 5 : 4);
+                cell.textContent = `No ${crestType} crests needed or available from M+ in this section.`;
+                if(totalRunsElementId) {
+                    document.getElementById(totalRunsElementId).textContent = '';
+                }
+            }
+        }
+
+        // Helper function to render delves table
+        function renderDelvesTable(tableBodyId, delvesCount, gildedFromDelves) {
+            const tableBody = document.getElementById(tableBodyId);
+            tableBody.innerHTML = '';
+            const row = tableBody.insertRow();
+            row.insertCell().textContent = `Tier 11`;
+            row.insertCell().textContent = delvesCount;
+            row.insertCell().textContent = DELVE_GILDED_CRESTS_PER_RUN;
+            row.insertCell().textContent = gildedFromDelves;
+        }
+
+
+        // --- OPTION 1 LOGIC: Fastest Route (Highest Accessible Keys) ---
+        function calculateOption1(gildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves) {
+            let currentGildedNeeded = gildedNeeded - gildedFromDelves;
+            currentGildedNeeded = Math.max(0, currentGildedNeeded); // Ensure it doesn't go negative
+
+            const suggestedGildedMPlusRuns = [];
+            const suggestedRunedMPlusRuns = []; // For conversion if direct Gilded isn't enough
+
+            // 2. Direct Gilded M+ (from highest accessible)
+            const directGildedSourcesSorted = [...accessibleGildedSources].sort((a, b) => b.level - a.level); // Sort high to low
+
+            if (currentGildedNeeded > 0 && directGildedSourcesSorted.length > 0) {
+                const highestSource = directGildedSourcesSorted[0];
+                const runsNeeded = Math.ceil(currentGildedNeeded / highestSource.crests);
+                const actualGildedFromRuns = runsNeeded * highestSource.crests;
+
+                suggestedGildedMPlusRuns.push({
+                    level: highestSource.level,
+                    runs: runsNeeded,
+                    crestsPerRun: highestSource.crests
+                });
+                currentGildedNeeded -= actualGildedFromRuns; // Subtract actual crests earned
+                currentGildedNeeded = Math.max(0, currentGildedNeeded); // Ensure it's not negative
+            }
+            renderMPlusTable('mythicGildedTableBody1', suggestedGildedMPlusRuns, 'totalGildedMPlusRuns1', 'Gilded');
+
+            // 3. Runed for Conversion (if remaining Gilded needed after direct M+ runs)
+            if (currentGildedNeeded > 0) {
+                const runedNeededFromConversion = currentGildedNeeded * CREST_CONVERSION_RATE_RUNED_TO_GILDED;
+
+                // For Option 1, use the highest accessible source for Runed conversion
+                const allAccessibleCrestSourcesForRunedConversion = [
+                    ...accessibleGildedSources.map(s => ({ level: s.level, crests: s.crests * CREST_CONVERSION_RATE_RUNED_TO_GILDED })),
+                    ...accessibleRunedSources.map(s => ({ level: s.level, crests: s.crests }))
+                ].sort((a, b) => b.level - a.level);
+
+                if (allAccessibleCrestSourcesForRunedConversion.length > 0) {
+                    const mostEfficientSource = allAccessibleCrestSourcesForRunedConversion[0];
+                    const runsNeeded = Math.ceil(runedNeededFromConversion / mostEfficientSource.crests);
+                    suggestedRunedMPlusRuns.push({
+                        level: mostEfficientSource.level,
+                        runs: runsNeeded,
+                        crestsPerRun: mostEfficientSource.crests
+                    });
+                }
+            }
+            renderMPlusTable('mythicRunedTableBody1', suggestedRunedMPlusRuns, 'totalRunedMPlusRuns1', 'Runed');
+        }
+
+
+        // --- OPTION 2 LOGIC: Focus Runed (M+2 to M+6 Keys for Conversion) ---
+        function calculateOption2(gildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves) {
+            let currentGildedNeeded = gildedNeeded - gildedFromDelves; // Start fresh for this option's calculation
+            currentGildedNeeded = Math.max(0, currentGildedNeeded); // Ensure it doesn't go negative
+
+            const option2Note = document.getElementById('option2Note');
+            const suggestedRunedMPlusRuns = [];
+
+            // All remaining Gilded needed after Delves are converted to Runed for this option's strategy.
+            const runedNeededFromConversion = currentGildedNeeded * CREST_CONVERSION_RATE_RUNED_TO_GILDED;
+
+            // Identify the most efficient Runed-dropping key (M+2 to M+6) that the user can run.
+            const runedDroppingKeysForOption2 = MYTHIC_PLUS_RUNED_DATA.filter(
+                mplus => mplus.level <= maxMythicLevel
+            ).sort((a, b) => b.level - a.level); // Sort highest in range (M+2-6) down to lowest
+
+            if (runedNeededFromConversion > 0 && runedDroppingKeysForOption2.length > 0) {
+                const mostEfficientRunedDroppingKey = runedDroppingKeysForOption2[0];
+                const runsNeeded = Math.ceil(runedNeededFromConversion / mostEfficientRunedDroppingKey.crests);
+                suggestedRunedMPlusRuns.push({
+                    level: mostEfficientRunedDroppingKey.level,
+                    runs: runsNeeded,
+                    crestsPerRun: mostEfficientRunedDroppingKey.crests
+                });
+            }
+
+            renderMPlusTable('mythicRunedTableBody2', suggestedRunedMPlusRuns, 'totalRunedMPlusRuns2', 'Runed');
+
+            // Set the notes for Option 2 based on maxMythicLevel
+            if (maxMythicLevel >= 7) {
+                option2Note.textContent = `This option focuses on farming lower M+ keys (M+2 to M+6) for Runed Crests, which are then converted to Gilded. It does not prioritize direct Gilded drops.`;
+            } else {
+                option2Note.textContent = `At your max Mythic+ level (${maxMythicLevel}), direct Gilded Crests (M+7+) are not accessible. This plan focuses solely on farming Runed Crests for conversion.`;
+            }
+        }
+
+        // JavaScript for Discord username copy to clipboard
+        document.getElementById('discordContact').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default link behavior
+            const username = this.textContent; // Get the username from the link's text
+            navigator.clipboard.writeText(username).then(() => {
+                // Success message
+                alert(`Discord username "${username}" copied to clipboard! You can now paste it in Discord to add me.`);
+            }).catch(err => {
+                // Fallback for when clipboard API is not available or fails
+                console.error('Failed to copy text: ', err);
+                alert('Failed to copy username. Please manually copy: ' + username);
+            });
+        });
+    </script>
+</body>
+</html>
