@@ -2,7 +2,8 @@
 
 # ⚔️ Crest Forge: War Within M+ Crest Calculator 🛡️
 
-*(A screenshot of the Crest Forge application in action)*
+![image](https://github.com/user-attachments/assets/614e7bd6-c6dc-4af2-b8c2-59d5ca0b3940)
+
 
 ## ✨ Overview
 
