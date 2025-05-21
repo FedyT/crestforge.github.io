@@ -211,7 +211,6 @@
             -ms-transform: translateX(16px);
             transform: translateX(16px);
         }
-        /* No need for .round classes, just apply directly to .toggle-slider */
 
         button {
             display: block;
@@ -240,10 +239,9 @@
             background-color: transparent; /* No background */
             border-radius: 0; /* No radius */
             box-shadow: none; /* No shadow */
-            /* Apply top padding and consistent left padding */
             padding: 40px 0 0 var(--content-horizontal-padding);
             margin-bottom: 30px;
-            display: none;
+            display: none; /* Hidden by default */
             width: 100%;
         }
 
@@ -258,21 +256,22 @@
         .results-card .summary-line strong {
             color: var(--highlight-gold);
             font-weight: 700;
-            margin-right: 5px; /* Space between number and icon */
+            margin-right: 5px;
         }
 
         .results-card .summary-line img {
-            width: 18px; /* Slightly smaller icons for summary lines */
+            width: 18px;
             height: 18px;
-            margin-right: 5px; /* Space after icon, before text */
+            margin-right: 5px;
             vertical-align: middle;
         }
 
         .results-card .option-section {
-            background-color: var(--card-dark); /* Using card-dark for inner sections */
-            border-radius: 5px; /* 5px radius for inner sections */
-            padding: 25px; /* Adjusted padding */
-            margin-top: 25px; /* Adjusted margin */
+            background-color: var(--card-dark);
+            border-radius: 5px;
+            padding: 25px;
+            margin-top: 25px;
+            /* REMOVED: overflow-x: auto; - we want tables to resize, not scroll */
         }
 
         .results-card .option-section:first-of-type {
@@ -287,12 +286,12 @@
 
         .results-card strong {
             color: var(--highlight-gold);
-            font-weight: 700; /* Bolder for emphasis */
+            font-weight: 700;
         }
 
         .note {
             font-size: 0.8em;
-            color: var(--text-muted); /* More muted for notes */
+            color: var(--text-muted);
             margin-top: 5px;
             text-align: left;
         }
@@ -302,29 +301,28 @@
             background-color: rgba(220, 53, 69, 0.15);
             border: 1px solid var(--error-red);
             padding: 10px;
-            border-radius: 5px; /* 5px radius */
+            border-radius: 5px;
             text-align: center;
             margin-top: 20px;
             font-weight: 500;
-            display: none;
+            display: none; /* Hidden by default */
             font-size: 0.9em;
         }
 
-        /* Styles for the table-like output based on provided image */
         .output-table {
             width: 100%;
-            border-collapse: collapse; /* Use collapse for no gaps, rely on background for separation */
+            border-collapse: collapse;
             margin-top: 15px;
             font-size: 0.9em;
-            border-radius: 5px; /* 5px radius for the entire table */
-            overflow: hidden; /* Ensures content doesn't break rounded corners */
+            border-radius: 5px;
+            overflow: hidden; /* Ensures border-radius applies */
         }
 
         .output-table th, .output-table td {
-            padding: 10px 12px; /* Adjusted padding */
+            padding: 10px 12px;
             text-align: left;
-            border: none; /* Remove default table borders */
-            white-space: nowrap; /* Prevent text wrapping in cells */
+            border: none;
+            /* REMOVED: white-space: nowrap; - we want wrapping on small screens */
         }
 
         .output-table thead tr {
@@ -337,10 +335,10 @@
             background-color: var(--table-row-bg);
         }
         .output-table tbody tr:nth-child(even) {
-            background-color: var(--table-row-even-bg); /* Zebra striping */
+            background-color: var(--table-row-even-bg);
         }
         .output-table tbody tr:hover {
-            background-color: var(--input-bg); /* Highlight on hover */
+            background-color: var(--input-bg);
         }
 
         .output-table td {
@@ -353,15 +351,15 @@
 
         /* Footer Styles */
         footer {
-            margin-top: 60px; /* Space between content and footer */
+            margin-top: 60px;
             padding: 30px 20px;
             text-align: center;
             font-size: 0.75em;
             color: var(--text-muted);
             border-top: 1px solid var(--border-subtle);
-            width: 100%; /* Ensure footer spans full width */
-            max-width: 1300px; /* Align with container max-width */
-            box-sizing: border-box; /* Include padding in width */
+            width: 100%;
+            max-width: 1300px;
+            box-sizing: border-box;
         }
 
         footer p {
@@ -369,18 +367,18 @@
         }
 
         footer a {
-            color: var(--highlight-blue); /* Make link stand out */
+            color: var(--highlight-blue);
             text-decoration: underline;
             cursor: pointer;
         }
         footer a:hover {
-            color: var(--highlight-gold); /* Hover effect */
+            color: var(--highlight-gold);
         }
 
         /* Responsive adjustments */
-        @media (max-width: 992px) { /* Adjust breakpoint for better tablet view */
+        @media (max-width: 992px) {
             :root {
-                --content-horizontal-padding: 30px; /* Update variable for this breakpoint */
+                --content-horizontal-padding: 30px;
             }
             .container {
                 flex-direction: column;
@@ -388,32 +386,89 @@
             }
             .sidebar {
                 width: auto;
-                /* Padding uses variable, so no need to redefine here */
             }
             .main-content {
                 padding: 0;
             }
             .results-card {
-                /* Preserve original top padding for this breakpoint (0), apply horizontal from variable */
                 padding: 0 0 0 var(--content-horizontal-padding);
             }
-            /* ... rest of existing styles ... */
         }
 
         @media (max-width: 768px) {
             :root {
-                --content-horizontal-padding: 20px; /* Update variable for this breakpoint */
+                --content-horizontal-padding: 20px;
             }
             body { padding: 20px 10px; }
-            .sidebar {
-                /* Padding uses variable, so no need to redefine here */
-            }
             .results-card {
-                /* Preserve original top padding for this breakpoint (20px), apply horizontal from variable */
                 padding: 20px 0 0 var(--content-horizontal-padding);
-                border-radius: 5px; /* Ensure consistency */
             }
-            /* ... rest of existing styles ... */
+            /* Table-specific styles for smaller screens, now within the 600px breakpoint */
+            footer {
+                padding: 20px 10px;
+                margin-top: 40px;
+            }
+        }
+
+        /* NEW: Styles for tables to stack on very small screens */
+        @media (max-width: 600px) {
+            .output-table,
+            .output-table tbody,
+            .output-table tr,
+            .output-table th,
+            .output-table td {
+                display: block; /* Make table elements behave like blocks */
+                width: 100%; /* Take full width */
+            }
+
+            .output-table thead {
+                display: none; /* Hide the original table headers on small screens */
+            }
+
+            .output-table tr {
+                margin-bottom: 15px; /* Add space between stacked rows */
+                border: 1px solid var(--border-subtle);
+                border-radius: 5px;
+                padding: 10px;
+                box-sizing: border-box;
+                background-color: var(--card-dark); /* Apply card background to each row */
+            }
+
+            .output-table td {
+                text-align: right; /* Align values to the right */
+                padding-left: 140px; /* Adjusted from 130px */
+                min-height: 25px; /* Ensure consistent row height */
+                position: relative;
+                border-bottom: 1px dotted rgba(255, 255, 255, 0.1); /* Subtle separator between values */
+                white-space: normal; /* Allow cell content to wrap */
+                box-sizing: border-box; /* Added for better sizing calculation */
+            }
+
+            .output-table td:last-child {
+                border-bottom: 0; /* No border for the last cell in a row */
+            }
+
+            .output-table td::before {
+                content: attr(data-label); /* Use data-label for the pseudo-element label */
+                position: absolute;
+                left: 10px;
+                width: 120px; /* Adjusted from 110px */
+                text-align: left;
+                font-weight: bold;
+                color: var(--highlight-blue); /* Color for the label */
+                white-space: normal; /* Allow label to wrap */
+                box-sizing: border-box; /* Added for better sizing calculation */
+            }
+        }
+
+        /* NEW: Revert overflow-x and white-space for larger screens (601px and up) */
+        @media (min-width: 601px) {
+            .results-card .option-section {
+                overflow-x: visible; /* Ensure tables don't scroll horizontally when there's enough space */
+            }
+            .output-table th, .output-table td {
+                 white-space: normal; /* Allow normal wrapping for larger screens */
+            }
         }
     </style>
 </head>
@@ -569,283 +624,391 @@
     </footer>
 
     <script>
-        const CREST_CONVERSION_RATE_RUNED_TO_GILDED = 3;
+        // Wrap all JavaScript code inside DOMContentLoaded listener
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const CREST_CONVERSION_RATE_RUNED_TO_GILDED = 3;
 
-        const MYTHIC_PLUS_GILDED_DATA = [ // These keys drop Gilded Crests directly
-            { level: 12, crests: 20 },
-            { level: 11, crests: 18 },
-            { level: 10, crests: 16 },
-            { level: 9, crests: 14 },
-            { level: 8, crests: 12 },
-            { level: 7, crests: 10 },
-        ];
+            const MYTHIC_PLUS_GILDED_DATA = [ // These keys drop Gilded Crests directly
+                { level: 12, crests: 20 },
+                { level: 11, crests: 18 },
+                { level: 10, crests: 16 },
+                { level: 9, crests: 14 },
+                { level: 8, crests: 12 },
+                { level: 7, crests: 10 },
+            ];
 
-        const MYTHIC_PLUS_RUNED_DATA = [ // These keys drop Runed Crests directly
-            { level: 6, crests: 18 },
-            { level: 5, crests: 16 },
-            { level: 4, crests: 14 },
-            { level: 3, crests: 12 },
-            { level: 2, crests: 10 },
-        ];
+            const MYTHIC_PLUS_RUNED_DATA = [ // These keys drop Runed Crests directly
+                { level: 6, crests: 18 },
+                { level: 5, crests: 16 },
+                { level: 4, crests: 14 },
+                { level: 3, crests: 12 },
+                { level: 2, crests: 10 },
+            ];
 
-        const DELVE_GILDED_CRESTS_PER_RUN = 7;
-        const DELVE_MAX_GILDED_PER_WEEK = 21; // Limited to 3 Delves +11 per week (3 runs * 7 crests/run)
+            const DELVE_GILDED_CRESTS_PER_RUN = 7;
+            const DELVE_MAX_GILDED_PER_WEEK = 21; // Limited to 3 Delves +11 per week (3 runs * 7 crests/run)
 
-        function calculateCrests() {
-            const gildedNeededInput = document.getElementById('gildedNeeded');
-            const maxMythicLevelInput = document.getElementById('maxMythicLevel');
-            const includeDelvesToggle = document.getElementById('includeDelvesToggle');
-            const errorMessage = document.getElementById('errorMessage');
-            const resultsDiv = document.getElementById('results');
-            const option1Section = document.getElementById('option1Section');
-            const option2Section = document.getElementById('option2Section');
-            const delvesSection = document.getElementById('delvesSection');
+            function calculateCrests() {
+                console.log("--- calculateCrests() started ---");
 
-            resultsDiv.style.display = 'none';
-            errorMessage.style.display = 'none';
+                const gildedNeededInput = document.getElementById('gildedNeeded');
+                const maxMythicLevelInput = document.getElementById('maxMythicLevel');
+                const includeDelvesToggle = document.getElementById('includeDelvesToggle');
+                const errorMessage = document.getElementById('errorMessage');
+                const resultsDiv = document.getElementById('results');
+                const option1Section = document.getElementById('option1Section');
+                const option2Section = document.getElementById('option2Section');
+                const delvesSection = document.getElementById('delvesSection');
 
-            let initialGildedNeeded = parseInt(gildedNeededInput.value);
-            let maxMythicLevel = parseInt(maxMythicLevelInput.value);
-            const includeDelves = includeDelvesToggle.checked;
+                // Hide previous results/errors immediately
+                resultsDiv.style.display = 'none';
+                errorMessage.style.display = 'none';
+                console.log("Results and error display reset.");
 
-            if (isNaN(initialGildedNeeded) || initialGildedNeeded < 0) {
-                errorMessage.textContent = "Enter a valid non-negative number for Gilded Crests Needed.";
-                errorMessage.style.display = 'block';
-                return;
-            }
+                try {
+                    let initialGildedNeeded = parseInt(gildedNeededInput.value);
+                    let maxMythicLevel = parseInt(maxMythicLevelInput.value);
+                    const includeDelves = includeDelvesToggle.checked;
 
-            if (initialGildedNeeded === 0) {
-                errorMessage.textContent = "You need 0 Gilded Crests.";
-                errorMessage.style.display = 'block';
-                clearResults();
-                return;
-            }
+                    console.log(`Input: Gilded=${gildedNeededInput.value} (parsed: ${initialGildedNeeded}), MaxM+=${maxMythicLevel}, Delves=${includeDelves}`);
 
-            // Update summary lines - only update numbers, text is static in HTML now
-            document.getElementById('totalGilded').textContent = initialGildedNeeded;
-            const equivalentRuned = initialGildedNeeded * CREST_CONVERSION_RATE_RUNED_TO_GILDED;
-            document.getElementById('runedEquivalentDisplay').value = equivalentRuned;
-            document.getElementById('totalEquivalentRuned').textContent = equivalentRuned;
-
-            const accessibleGildedSources = MYTHIC_PLUS_GILDED_DATA.filter(
-                mplus => mplus.level <= maxMythicLevel
-            );
-            const accessibleRunedSources = MYTHIC_PLUS_RUNED_DATA.filter(
-                mplus => mplus.level <= maxMythicLevel
-            );
-
-            // Dynamically update Option 1 heading
-            const option1Heading = document.getElementById('option1Heading');
-            if (maxMythicLevel >= 7) {
-                 // Find the highest direct gilded level the user can run
-                 const highestAccessibleDirectGilded = accessibleGildedSources.length > 0 ? Math.max(...accessibleGildedSources.map(s => s.level)) : null;
-                 if (highestAccessibleDirectGilded) {
-                    option1Heading.textContent = `Option 1: Focus Gilded (M+${highestAccessibleDirectGilded === 12 ? '12+' : highestAccessibleDirectGilded} Keys)`;
-                 } else {
-                     option1Heading.textContent = `Option 1: Focus Gilded (M+7+ Keys)`; // Fallback, though typically won't be hit if maxMythicLevel >= 7
-                 }
-            }
-
-            // Handle Delves section visibility and calculation
-            let gildedFromDelves = 0;
-            let delvesCount = 0;
-            if (includeDelves) {
-                delvesSection.style.display = 'block';
-                delvesCount = Math.min(Math.floor(initialGildedNeeded / DELVE_GILDED_CRESTS_PER_RUN), DELVE_MAX_GILDED_PER_WEEK / DELVE_GILDED_CRESTS_PER_RUN);
-                gildedFromDelves = delvesCount * DELVE_GILDED_CRESTS_PER_RUN;
-                renderDelvesTable('delvesTableBody', delvesCount, gildedFromDelves);
-            } else {
-                delvesSection.style.display = 'none';
-                renderDelvesTable('delvesTableBody', 0, 0); // Clear delves table
-            }
-
-            if (maxMythicLevel >= 7) {
-                option1Section.style.display = 'block';
-                option2Section.style.display = 'block';
-                calculateOption1(initialGildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves);
-                calculateOption2(initialGildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves);
-            } else { // maxMythicLevel is 6 or less
-                option1Section.style.display = 'none'; // Hide Option 1
-                option2Section.style.display = 'block'; // Only show Option 2
-                calculateOption2(initialGildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves);
-            }
-
-            resultsDiv.style.display = 'block';
-        }
-
-        // Helper to clear results
-        function clearResults() {
-            document.getElementById('delvesTableBody').innerHTML = '';
-            document.getElementById('mythicGildedTableBody1').innerHTML = '';
-            document.getElementById('totalGildedMPlusRuns1').textContent = '';
-            document.getElementById('mythicRunedTableBody1').innerHTML = '';
-            document.getElementById('totalRunedMPlusRuns1').textContent = '';
-            document.getElementById('mythicRunedTableBody2').innerHTML = '';
-            document.getElementById('totalRunedMPlusRuns2').textContent = '';
-            document.getElementById('option2Note').textContent = '';
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('runedEquivalentDisplay').value = '0';
-            document.getElementById('totalGilded').textContent = '0'; // Reset summary text
-            document.getElementById('totalEquivalentRuned').textContent = '0'; // Reset summary text
-        }
-
-        // Helper function to render table rows
-        function renderMPlusTable(tableBodyId, runsArray, totalRunsElementId, crestType) {
-            const tableBody = document.getElementById(tableBodyId);
-            tableBody.innerHTML = '';
-            let totalRunsCalculated = 0;
-            let totalCrestsEarned = 0;
-            let totalEquivalentGilded = 0;
-
-            if (runsArray.length > 0) {
-                runsArray.forEach(run => {
-                    const row = tableBody.insertRow();
-                    row.insertCell().textContent = `M+${run.level}`;
-                    row.insertCell().textContent = run.runs;
-                    row.insertCell().textContent = run.crestsPerRun;
-                    const earnedInRuns = run.runs * run.crestsPerRun;
-                    row.insertCell().textContent = earnedInRuns;
-
-                    if (crestType === 'Runed') {
-                        const equivalentGilded = Math.floor(earnedInRuns / CREST_CONVERSION_RATE_RUNED_TO_GILDED);
-                        row.insertCell().textContent = equivalentGilded;
-                        totalEquivalentGilded += equivalentGilded;
+                    if (isNaN(initialGildedNeeded) || initialGildedNeeded < 0) {
+                        errorMessage.textContent = "Enter a valid non-negative number for Gilded Crests Needed.";
+                        errorMessage.style.display = 'block';
+                        console.error("Validation Error: Invalid Gilded Crests Needed input.");
+                        return;
                     }
-                    // For Gilded type, the "Equivalent Gilded" column is not added
 
-                    totalRunsCalculated += run.runs;
-                    totalCrestsEarned += earnedInRuns;
-                });
-                if(totalRunsElementId) {
-                    if (crestType === 'Runed') {
-                        document.getElementById(totalRunsElementId).textContent = `Total M+ Runed runs: ${totalRunsCalculated} (yielding ${totalCrestsEarned} Runed Crests, convertible to ${totalEquivalentGilded} Gilded)`;
+                    if (initialGildedNeeded === 0) {
+                        errorMessage.textContent = "You need 0 Gilded Crests.";
+                        errorMessage.style.display = 'block';
+                        clearResults();
+                        console.warn("Info: Gilded needed is 0. Showing message and clearing results.");
+                        return;
+                    }
+
+                    // Update summary lines
+                    document.getElementById('totalGilded').textContent = initialGildedNeeded;
+                    const equivalentRuned = initialGildedNeeded * CREST_CONVERSION_RATE_RUNED_TO_GILDED;
+                    document.getElementById('runedEquivalentDisplay').value = equivalentRuned;
+                    document.getElementById('totalEquivalentRuned').textContent = equivalentRuned;
+                    console.log("Summary updated.");
+
+                    const accessibleGildedSources = MYTHIC_PLUS_GILDED_DATA.filter(
+                        mplus => mplus.level <= maxMythicLevel
+                    );
+                    const accessibleRunedSources = MYTHIC_PLUS_RUNED_DATA.filter(
+                        mplus => mplus.level <= maxMythicLevel
+                    );
+
+                    // Dynamically update Option 1 heading
+                    const option1Heading = document.getElementById('option1Heading');
+                    if (option1Heading) {
+                        if (maxMythicLevel >= 7) {
+                             const highestAccessibleDirectGilded = accessibleGildedSources.length > 0 ? Math.max(...accessibleGildedSources.map(s => s.level)) : null;
+                             if (highestAccessibleDirectGilded) {
+                                option1Heading.textContent = `Option 1: Focus Gilded (M+${highestAccessibleDirectGilded === 12 ? '12+' : highestAccessibleDirectGilded} Keys)`;
+                             } else {
+                                 // Fallback for when maxMythicLevel >= 7 but no specific gilded sources found (e.g., if data structure was different)
+                                 option1Heading.textContent = `Option 1: Focus Gilded (M+7+ Keys)`;
+                             }
+                        }
+                        console.log("Option 1 heading updated.");
                     } else {
-                        document.getElementById(totalRunsElementId).textContent = `Total M+ Gilded runs: ${totalRunsCalculated} (yielding ${totalCrestsEarned} Gilded Crests)`;
+                        console.warn("Element with ID 'option1Heading' not found. Cannot update heading.");
+                    }
+
+
+                    // Handle Delves section visibility and calculation
+                    let gildedFromDelves = 0;
+                    let delvesCount = 0;
+                    if (includeDelves) {
+                        delvesSection.style.display = 'block';
+                        delvesCount = Math.min(Math.floor(initialGildedNeeded / DELVE_GILDED_CRESTS_PER_RUN), DELVE_MAX_GILDED_PER_WEEK / DELVE_GILDED_CRESTS_PER_RUN);
+                        gildedFromDelves = delvesCount * DELVE_GILDED_CRESTS_PER_RUN;
+                        renderDelvesTable('delvesTableBody', delvesCount, gildedFromDelves);
+                        console.log(`Delves included. ${delvesCount} runs, ${gildedFromDelves} gilded.`);
+                    } else {
+                        delvesSection.style.display = 'none';
+                        renderDelvesTable('delvesTableBody', 0, 0); // Clear delves table
+                        console.log("Delves not included.");
+                    }
+
+                    // Call the actual calculation functions
+                    if (maxMythicLevel >= 7) {
+                        option1Section.style.display = 'block';
+                        option2Section.style.display = 'block';
+                        console.log("Calling calculateOption1 and calculateOption2.");
+                        calculateOption1(initialGildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves);
+                        calculateOption2(initialGildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves);
+                    } else {
+                        option1Section.style.display = 'none'; // Hide Option 1 if max level is below 7
+                        option2Section.style.display = 'block';
+                        console.log("Calling calculateOption2 only.");
+                        calculateOption2(initialGildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves);
+                    }
+
+                    resultsDiv.style.display = 'block'; // Make results visible at the very end
+                    console.log("Results div set to 'block'.");
+
+                } catch (error) {
+                    console.error("An unexpected error occurred during calculation:", error);
+                    errorMessage.textContent = "An unexpected error occurred. Please check the console for details.";
+                    errorMessage.style.display = 'block';
+                    resultsDiv.style.display = 'none'; // Ensure results are hidden if an error occurs
+                }
+                console.log("--- calculateCrests() finished ---");
+            }
+
+            // Calculation logic for Option 1: Prioritize Direct Gilded then Runed for Conversion
+            function calculateOption1(initialGildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves) {
+                console.log("calculateOption1 started.");
+                let remainingGildedNeeded = initialGildedNeeded - gildedFromDelves;
+                if (remainingGildedNeeded < 0) remainingGildedNeeded = 0;
+
+                const gildedRuns = [];
+                const runedForGildedConversion = [];
+                let currentGildedRemaining = remainingGildedNeeded;
+
+                // 1. Prioritize direct Gilded Crests from M+7+ (highest accessible first)
+                const sortedGildedSources = accessibleGildedSources.sort((a, b) => b.level - a.level);
+                for (const source of sortedGildedSources) {
+                    if (currentGildedRemaining <= 0) break;
+
+                    // Calculate how many runs of this specific key level are needed for *some* or all remaining gilded
+                    const runsNeededForThisSource = Math.ceil(currentGildedRemaining / source.crests);
+                    if (runsNeededForThisSource > 0) {
+                        gildedRuns.push({ level: source.level, runs: runsNeededForThisSource, crestsPerRun: source.crests });
+                        currentGildedRemaining -= (runsNeededForThisSource * source.crests);
+                        console.log(`Option 1 - Direct Gilded (M+${source.level}): Runs: ${runsNeededForThisSource}, Remaining Gilded: ${currentGildedRemaining}`);
                     }
                 }
-            } else {
-                const row = tableBody.insertRow();
-                const cell = row.insertCell();
-                // Adjust colspan based on crestType as the column count changes
-                cell.colSpan = (crestType === 'Runed' ? 5 : 4);
-                cell.textContent = `No ${crestType} crests needed or available from M+ in this section.`;
-                if(totalRunsElementId) {
-                    document.getElementById(totalRunsElementId).textContent = '';
+
+                // 2. If still needed, convert Runed from the highest accessible Runed keys (M+2 to M+6)
+                if (currentGildedRemaining > 0) {
+                    let currentRunedEquivalentNeeded = currentGildedRemaining * CREST_CONVERSION_RATE_RUNED_TO_GILDED;
+                    const sortedRunedSources = accessibleRunedSources.sort((a, b) => b.level - a.level); // Sort descending
+
+                    for (const source of sortedRunedSources) {
+                        if (currentRunedEquivalentNeeded <= 0) break;
+
+                        const runsNeededForThisSource = Math.ceil(currentRunedEquivalentNeeded / source.crests);
+                        if (runsNeededForThisSource > 0) {
+                            runedForGildedConversion.push({ level: source.level, runs: runsNeededForThisSource, crestsPerRun: source.crests });
+                            currentRunedEquivalentNeeded -= (runsNeededForThisSource * source.crests);
+                            console.log(`Option 1 - Runed Conversion (M+${source.level}): Runs: ${runsNeededForThisSource}, Remaining Runed Eq: ${currentRunedEquivalentNeeded}`);
+                        }
+                    }
                 }
+
+                renderMPlusTable('mythicGildedTableBody1', gildedRuns, 'totalGildedMPlusRuns1', 'Gilded');
+                renderMPlusTable('mythicRunedTableBody1', runedForGildedConversion, 'totalRunedMPlusRuns1', 'Runed');
+                console.log("calculateOption1 finished.");
             }
-        }
 
-        // Helper function to render delves table
-        function renderDelvesTable(tableBodyId, delvesCount, gildedFromDelves) {
-            const tableBody = document.getElementById(tableBodyId);
-            tableBody.innerHTML = '';
-            const row = tableBody.insertRow();
-            row.insertCell().textContent = `Tier 11`;
-            row.insertCell().textContent = delvesCount;
-            row.insertCell().textContent = DELVE_GILDED_CRESTS_PER_RUN;
-            row.insertCell().textContent = gildedFromDelves;
-        }
+            // Calculation logic for Option 2: Exclusively focus on Runed for Conversion
+            function calculateOption2(initialGildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves) {
+                console.log("calculateOption2 started.");
+                let remainingGildedNeeded = initialGildedNeeded - gildedFromDelves;
+                if (remainingGildedNeeded < 0) remainingGildedNeeded = 0;
 
+                const runedForGildedConversion = [];
+                let currentRunedEquivalentNeeded = remainingGildedNeeded * CREST_CONVERSION_RATE_RUNED_TO_GILDED;
 
-        // --- OPTION 1 LOGIC: Fastest Route (Highest Accessible Keys) ---
-        function calculateOption1(gildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves) {
-            let currentGildedNeeded = gildedNeeded - gildedFromDelves;
-            currentGildedNeeded = Math.max(0, currentGildedNeeded); // Ensure it doesn't go negative
+                // Option 2 exclusively focuses on Runed for conversion (highest accessible first)
+                // Note: accessibleRunedSources already filtered by maxMythicLevel
+                const sortedRunedSources = accessibleRunedSources.sort((a, b) => b.level - a.level);
 
-            const suggestedGildedMPlusRuns = [];
-            const suggestedRunedMPlusRuns = []; // For conversion if direct Gilded isn't enough
+                for (const source of sortedRunedSources) {
+                    if (currentRunedEquivalentNeeded <= 0) break;
 
-            // 2. Direct Gilded M+ (from highest accessible)
-            const directGildedSourcesSorted = [...accessibleGildedSources].sort((a, b) => b.level - a.level); // Sort high to low
+                    const runsNeededForThisSource = Math.ceil(currentRunedEquivalentNeeded / source.crests);
+                    if (runsNeededForThisSource > 0) {
+                        runedForGildedConversion.push({ level: source.level, runs: runsNeededForThisSource, crestsPerRun: source.crests });
+                        currentRunedEquivalentNeeded -= (runsNeededForThisSource * source.crests);
+                        console.log(`Option 2 - Runed Conversion (M+${source.level}): Runs: ${runsNeededForThisSource}, Remaining Runed Eq: ${currentRunedEquivalentNeeded}`);
+                    }
+                }
 
-            if (currentGildedNeeded > 0 && directGildedSourcesSorted.length > 0) {
-                const highestSource = directGildedSourcesSorted[0];
-                const runsNeeded = Math.ceil(currentGildedNeeded / highestSource.crests);
-                const actualGildedFromRuns = runsNeeded * highestSource.crests;
+                renderMPlusTable('mythicRunedTableBody2', runedForGildedConversion, 'totalRunedMPlusRuns2', 'Runed');
 
-                suggestedGildedMPlusRuns.push({
-                    level: highestSource.level,
-                    runs: runsNeeded,
-                    crestsPerRun: highestSource.crests
-                });
-                currentGildedNeeded -= actualGildedFromRuns; // Subtract actual crests earned
-                currentGildedNeeded = Math.max(0, currentGildedNeeded); // Ensure it's not negative
+                const option2NoteElement = document.getElementById('option2Note');
+                if (option2NoteElement) {
+                    option2NoteElement.textContent = `This option exclusively focuses on converting Runed Crests from keys up to M+${maxMythicLevel}.`;
+                }
+                console.log("calculateOption2 finished.");
             }
-            renderMPlusTable('mythicGildedTableBody1', suggestedGildedMPlusRuns, 'totalGildedMPlusRuns1', 'Gilded');
 
-            // 3. Runed for Conversion (if remaining Gilded needed after direct M+ runs)
-            if (currentGildedNeeded > 0) {
-                const runedNeededFromConversion = currentGildedNeeded * CREST_CONVERSION_RATE_RUNED_TO_GILDED;
 
-                // For Option 1, use the highest accessible source for Runed conversion
-                const allAccessibleCrestSourcesForRunedConversion = [
-                    ...accessibleGildedSources.map(s => ({ level: s.level, crests: s.crests * CREST_CONVERSION_RATE_RUNED_TO_GILDED })),
-                    ...accessibleRunedSources.map(s => ({ level: s.level, crests: s.crests }))
-                ].sort((a, b) => b.level - a.level);
+            // Ensure clearResults also logs its action
+            function clearResults() {
+                console.log("clearResults() called.");
+                document.getElementById('delvesTableBody').innerHTML = '';
+                document.getElementById('mythicGildedTableBody1').innerHTML = '';
+                document.getElementById('totalGildedMPlusRuns1').textContent = '';
+                document.getElementById('mythicRunedTableBody1').innerHTML = '';
+                document.getElementById('totalRunedMPlusRuns1').textContent = '';
+                document.getElementById('mythicRunedTableBody2').innerHTML = '';
+                document.getElementById('totalRunedMPlusRuns2').textContent = '';
+                document.getElementById('option2Note').textContent = '';
+                document.getElementById('results').style.display = 'none'; // This will ensure the main results area is hidden
+                document.getElementById('runedEquivalentDisplay').value = '0';
+                document.getElementById('totalGilded').textContent = '0';
+                document.getElementById('totalEquivalentRuned').textContent = '0';
+                console.log("Results cleared and hidden.");
+            }
 
-                if (allAccessibleCrestSourcesForRunedConversion.length > 0) {
-                    const mostEfficientSource = allAccessibleCrestSourcesForRunedConversion[0];
-                    const runsNeeded = Math.ceil(runedNeededFromConversion / mostEfficientSource.crests);
-                    suggestedRunedMPlusRuns.push({
-                        level: mostEfficientSource.level,
-                        runs: runsNeeded,
-                        crestsPerRun: mostEfficientSource.crests
+            // Helper function to render table rows
+            function renderMPlusTable(tableBodyId, runsArray, totalRunsElementId, crestType) {
+                console.log(`renderMPlusTable called for ${tableBodyId}. Crest Type: ${crestType}`);
+                const tableBody = document.getElementById(tableBodyId);
+                if (!tableBody) {
+                    console.error(`Error: Table body with ID '${tableBodyId}' not found.`);
+                    return; // Exit if element not found
+                }
+                tableBody.innerHTML = '';
+                let totalRunsCalculated = 0;
+                let totalCrestsEarned = 0;
+                let totalEquivalentGilded = 0;
+
+                // Define headers for data-label attributes
+                const headers = {
+                    'Gilded': ['Mythic+', 'Runs', 'Crest/Run', 'Total Gilded'],
+                    'Runed': ['Mythic+', 'Runs', 'Crest/Run', 'Total Runed', 'Eq. Gilded']
+                };
+                const currentHeaders = headers[crestType];
+
+                if (runsArray.length > 0) {
+                    runsArray.forEach(run => {
+                        const row = tableBody.insertRow();
+                        // Mythic+ Level
+                        let cell = row.insertCell();
+                        console.log(`Setting M+ Level for ${tableBodyId}: M+${run.level}`); // DEBUG LOG
+                        cell.textContent = `M+${run.level}`;
+                        cell.setAttribute('data-label', currentHeaders[0]);
+
+                        // Number Of Runs
+                        cell = row.insertCell();
+                        console.log(`Setting Runs for ${tableBodyId}: ${run.runs}`); // DEBUG LOG
+                        cell.textContent = run.runs;
+                        cell.setAttribute('data-label', currentHeaders[1]);
+
+                        // Crests Per Run
+                        cell = row.insertCell();
+                        console.log(`Setting Crests Per Run for ${tableBodyId}: ${run.crestsPerRun}`); // DEBUG LOG
+                        cell.textContent = run.crestsPerRun;
+                        cell.setAttribute('data-label', currentHeaders[2]);
+
+                        // Total Crests From Runs
+                        const earnedInRuns = run.runs * run.crestsPerRun;
+                        cell = row.insertCell();
+                        console.log(`Setting Total Crests From Runs for ${tableBodyId}: ${earnedInRuns}`); // DEBUG LOG
+                        cell.textContent = earnedInRuns;
+                        cell.setAttribute('data-label', currentHeaders[3]);
+
+
+                        if (crestType === 'Runed') {
+                            const equivalentGilded = Math.floor(earnedInRuns / CREST_CONVERSION_RATE_RUNED_TO_GILDED);
+                            cell = row.insertCell();
+                            console.log(`Setting Equivalent Gilded for ${tableBodyId}: ${equivalentGilded}`); // DEBUG LOG
+                            cell.textContent = equivalentGilded;
+                            cell.setAttribute('data-label', currentHeaders[4]); // The 5th header
+                            totalEquivalentGilded += equivalentGilded;
+                        }
+
+                        totalRunsCalculated += run.runs;
+                        totalCrestsEarned += earnedInRuns;
                     });
+                    if(totalRunsElementId) {
+                        const totalRunsElement = document.getElementById(totalRunsElementId);
+                        if (totalRunsElement) {
+                            if (crestType === 'Runed') {
+                                totalRunsElement.textContent = `Total M+ Runed runs: ${totalRunsCalculated} (yielding ${totalCrestsEarned} Runed Crests, convertible to ${totalEquivalentGilded} Gilded)`;
+                            } else {
+                                totalRunsElement.textContent = `Total M+ Gilded runs: ${totalRunsCalculated} (yielding ${totalCrestsEarned} Gilded Crests)`;
+                            }
+                        } else {
+                            console.error(`Error: Total runs element with ID '${totalRunsElementId}' not found during successful render.`);
+                        }
+                    }
+                } else {
+                    const row = tableBody.insertRow();
+                    const cell = row.insertCell();
+                    cell.colSpan = (crestType === 'Runed' ? 5 : 4);
+                    const message = `No ${crestType} crests needed or available from M+ in this section.`;
+                    console.log(`Setting no data message for ${tableBodyId}: ${message}`); // DEBUG LOG
+                    cell.textContent = message;
+                    cell.setAttribute('data-label', 'Info');
+                    if(totalRunsElementId) { // Added check: Only attempt to update if ID is provided
+                        const totalRunsElement = document.getElementById(totalRunsElementId);
+                        if (totalRunsElement) { // Added check: Only attempt to update if element exists
+                            totalRunsElement.textContent = '';
+                        }
+                    }
                 }
+                console.log(`renderMPlusTable for ${tableBodyId} finished.`);
             }
-            renderMPlusTable('mythicRunedTableBody1', suggestedRunedMPlusRuns, 'totalRunedMPlusRuns1', 'Runed');
-        }
 
+            // Helper function to render delves table
+            function renderDelvesTable(tableBodyId, delvesCount, gildedFromDelves) {
+                console.log(`renderDelvesTable called for ${tableBodyId}.`);
+                const tableBody = document.getElementById(tableBodyId);
+                if (!tableBody) {
+                    console.error(`Error: Delves table body with ID '${tableBodyId}' not found.`);
+                    return;
+                }
+                tableBody.innerHTML = '';
 
-        // --- OPTION 2 LOGIC: Focus Runed (M+2 to M+6 Keys for Conversion) ---
-        function calculateOption2(gildedNeeded, maxMythicLevel, accessibleGildedSources, accessibleRunedSources, gildedFromDelves) {
-            let currentGildedNeeded = gildedNeeded - gildedFromDelves; // Start fresh for this option's calculation
-            currentGildedNeeded = Math.max(0, currentGildedNeeded); // Ensure it doesn't go negative
+                const headers = ['Delves', 'Runs', 'Gilded/Run', 'Total Gilded'];
 
-            const option2Note = document.getElementById('option2Note');
-            const suggestedRunedMPlusRuns = [];
+                if (delvesCount > 0) {
+                    const row = tableBody.insertRow();
+                    let cell = row.insertCell();
+                    console.log(`Setting Delves Tier for ${tableBodyId}: Tier 11`); // DEBUG LOG
+                    cell.textContent = `Tier 11`;
+                    cell.setAttribute('data-label', headers[0]);
 
-            // All remaining Gilded needed after Delves are converted to Runed for this option's strategy.
-            const runedNeededFromConversion = currentGildedNeeded * CREST_CONVERSION_RATE_RUNED_TO_GILDED;
+                    cell = row.insertCell();
+                    console.log(`Setting Delves Runs for ${tableBodyId}: ${delvesCount}`); // DEBUG LOG
+                    cell.textContent = delvesCount;
+                    cell.setAttribute('data-label', headers[1]);
 
-            // Identify the most efficient Runed-dropping key (M+2 to M+6) that the user can run.
-            const runedDroppingKeysForOption2 = MYTHIC_PLUS_RUNED_DATA.filter(
-                mplus => mplus.level <= maxMythicLevel
-            ).sort((a, b) => b.level - a.level); // Sort highest in range (M+2-6) down to lowest
+                    cell = row.insertCell();
+                    console.log(`Setting Delves Gilded/Run for ${tableBodyId}: ${DELVE_GILDED_CRESTS_PER_RUN}`); // DEBUG LOG
+                    cell.textContent = DELVE_GILDED_CRESTS_PER_RUN;
+                    cell.setAttribute('data-label', headers[2]);
 
-            if (runedNeededFromConversion > 0 && runedDroppingKeysForOption2.length > 0) {
-                const mostEfficientRunedDroppingKey = runedDroppingKeysForOption2[0];
-                const runsNeeded = Math.ceil(runedNeededFromConversion / mostEfficientRunedDroppingKey.crests);
-                suggestedRunedMPlusRuns.push({
-                    level: mostEfficientRunedDroppingKey.level,
-                    runs: runsNeeded,
-                    crestsPerRun: mostEfficientRunedDroppingKey.crests
+                    cell = row.insertCell();
+                    console.log(`Setting Delves Total Gilded for ${tableBodyId}: ${gildedFromDelves}`); // DEBUG LOG
+                    cell.textContent = gildedFromDelves;
+                    cell.setAttribute('data-label', headers[3]);
+                } else {
+                    const row = tableBody.insertRow();
+                    const cell = row.insertCell();
+                    cell.colSpan = 4;
+                    const message = `No Delves runs needed or included.`;
+                    console.log(`Setting no data message for ${tableBodyId}: ${message}`); // DEBUG LOG
+                    cell.textContent = message;
+                    cell.setAttribute('data-label', 'Info');
+                }
+                console.log(`renderDelvesTable for ${tableBodyId} finished.`);
+            }
+
+            // JavaScript for Discord username copy to clipboard
+            document.getElementById('discordContact').addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default link behavior
+                const username = this.textContent; // Get the username from the link's text
+                navigator.clipboard.writeText(username).then(() => {
+                    alert(`Discord username "${username}" copied to clipboard! You can now paste it in Discord to add me.`);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    alert('Failed to copy username. Please manually copy: ' + username);
                 });
-            }
-
-            renderMPlusTable('mythicRunedTableBody2', suggestedRunedMPlusRuns, 'totalRunedMPlusRuns2', 'Runed');
-
-            // Set the notes for Option 2 based on maxMythicLevel
-            if (maxMythicLevel >= 7) {
-                option2Note.textContent = `This option focuses on farming lower M+ keys (M+2 to M+6) for Runed Crests, which are then converted to Gilded. It does not prioritize direct Gilded drops.`;
-            } else {
-                option2Note.textContent = `At your max Mythic+ level (${maxMythicLevel}), direct Gilded Crests (M+7+) are not accessible. This plan focuses solely on farming Runed Crests for conversion.`;
-            }
-        }
-
-        // JavaScript for Discord username copy to clipboard
-        document.getElementById('discordContact').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default link behavior
-            const username = this.textContent; // Get the username from the link's text
-            navigator.clipboard.writeText(username).then(() => {
-                // Success message
-                alert(`Discord username "${username}" copied to clipboard! You can now paste it in Discord to add me.`);
-            }).catch(err => {
-                // Fallback for when clipboard API is not available or fails
-                console.error('Failed to copy text: ', err);
-                alert('Failed to copy username. Please manually copy: ' + username);
             });
-        });
+
+            // Make calculateCrests function globally available for onclick
+            window.calculateCrests = calculateCrests;
+        }); // End DOMContentLoaded
     </script>
 </body>
 </html>
