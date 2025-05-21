@@ -1,6 +1,4 @@
-Okay, here's a detailed and explanatory `README.md` text for your GitHub repository, using formatting and emojis to make it engaging.
 
------
 
 # ⚔️ Crest Forge: War Within M+ Crest Calculator 🛡️
 
@@ -58,6 +56,3 @@ This project is open-source and available under the [MIT License](https://www.go
 
 If you have any questions, suggestions, or just want to chat about WoW, feel free to reach out on Discord: `itsproogi`
 
------
-
-*(Make sure to create a `LICENSE` file in your repository with the MIT License text if you don't have one yet. You can find the full text of the MIT License easily online.)*
